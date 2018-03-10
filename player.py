@@ -2,6 +2,7 @@ import requests
 import json
 import time
 
+url = "http://0.0.0.0:6001"
 
 
 
@@ -14,13 +15,15 @@ def player_GET(url):
 
 # print(player_GET("http://0.0.0.0:6001"))
 
-def player_Action(url, type, amount ):
+def player_Action(type, amount ):
 
     data = {
     "type": type,
     "amount": amount
 
     }
+
+
 
     data_json = json.dumps(data)
     headers = {'content-type': 'application/json'}
