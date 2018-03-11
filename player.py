@@ -1,5 +1,6 @@
 import math
 import api
+import time
 
 moveConst = 0.4
 turnConst = 0.33
@@ -82,6 +83,8 @@ class Player(object):
 
     def shoot(self, target):
         #get the best weapon find weapon and change
+        self.turnTo(target)
+        time.sleep(1/20)
         if self.lookingAt(target):
             api.player_Action("shoot", 1)
             api.player_Action("shoot", 1)
@@ -97,3 +100,10 @@ class Player(object):
             return True
         else:
             return False
+
+    def giveThemHell(self,target):
+        for x in range(4):
+            self.turnTo(target)
+            self.move(target)
+            self.shoot(target)
+            time.sleep(1/15)
