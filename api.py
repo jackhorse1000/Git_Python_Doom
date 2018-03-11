@@ -18,24 +18,24 @@ class keywords(object):
 
 keywords=keywords("http://0.0.0.0:6002")
 
-def world_GET(url):
+def world_GET(url=keywords.url):
 
     r= requests.get(url+"/api/world")
     result = json.loads(r.text)
     return result
 
-def los_GET(url, id1, id2):
+def los_GET( id1, id2,url=keywords.url):
     r = requests.get(url + "/api/world/los/" + str(id1) + "/" + str(id2))
     result = json.loads(r.text)
     return result
 
-def player_GET(url):
+def player_GET(url=keywords.url):
     r = requests.get(url + "/api/player")
     result = json.loads(r.text)
     return result
 
 
-def players_GET(url):
+def players_GET(url=keywords.url):
 
     r = requests.get(url+"/api/players")
     result = json.loads(r.text)
@@ -43,7 +43,7 @@ def players_GET(url):
 
 
 
-def player_Action(type, amount,url ):
+def player_Action(type, amount,url=keywords.url ):
 
     data = {
     "type": type,
@@ -54,7 +54,4 @@ def player_Action(type, amount,url ):
     r=requests.post(url+"/api/player/actions",data=data_json,headers=headers)
 
 
-
-print(player_GET(keywords.url))
-player_Action(keywords.shoot,10,keywords.url)
 
