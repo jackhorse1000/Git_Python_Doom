@@ -1,5 +1,6 @@
 import math
 import api
+import time
 
 class Obj(object):
     def __init__(self,dict):
@@ -98,6 +99,17 @@ class Player(object):
             return True
         else:
             return False
+
+    def turn(self,angle):
+        amount = abs(angle) * turnConst
+
+        if angle > 0:
+            api.player_Action("turn-right", amount)
+        else:
+            api.player_Action("turn-left", amount)
+
+    def move(self, distance):
+        api.player_Action("forward", int(distance * moveConst))
 
     def giveThemHell(self,target):
         for x in range(4):
