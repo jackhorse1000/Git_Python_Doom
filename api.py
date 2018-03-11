@@ -1,8 +1,8 @@
 import requests
 import json
 import time
-from classes import Obj
-from player import Player
+from classes import Obj, Player
+
 
 #strings for player/action
 
@@ -20,7 +20,7 @@ class keywords(object):
 
 
 
-keywords=keywords("http://0.0.0.0:6001")
+keywords=keywords("http://0.0.0.0:6002")
 
 def world_GET(url=keywords.url):
 

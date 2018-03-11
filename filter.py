@@ -1,7 +1,7 @@
 from api import *
-from classes import Obj
+from classes import Obj, Player
 from math import sqrt
-from player import *
+
 
 
 is_shotgun = lambda shotgun:shotgun.type=='Shotgun'
