@@ -7,6 +7,9 @@ from math import sqrt
 is_shotgun = lambda shotgun:shotgun.type=='Shotgun'
 is_ammo = lambda ammo: ammo.type=="Shotgun shells"
 
+def get_player_by_id(id):
+    players=get_enemies()
+    return [p for p in players if p.id==id][0]
 
 def get_all_players(url=keywords.url):
     players=players_GET(url)

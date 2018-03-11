@@ -25,14 +25,20 @@ def goto_control(target):
 
     id=target.id
 
+
     while True:
         player = api.player_GET()
-
-
+        target = get_player_by_id(id)
+        time.sleep(0.01)
         turn = player.GetAngleTo(target)
         dist= player.distance(target)
 
-        if player.GetAngleTo(target)
+        if abs(turn)>10:
+            player.turn_frame(turn)
+            continue
+        if dist>10:
+            player.move_frame()
+        break
 
 
 
