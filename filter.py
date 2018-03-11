@@ -8,7 +8,7 @@ closest = lambda player: sqrt((player['position']['x'])**2+(player['position']['
 
 def get_all_players(url=keywords.url):
     players=players_GET(url)
-    print (players)
+    return players
 
 def get_enemies(url=keywords.url):
     player=player_GET(url)
@@ -18,7 +18,8 @@ def get_enemies(url=keywords.url):
     return enemies
 
 def sort_enemies(enemies,key=closest,reverse=False):
-    return sorted(enemies,key,reverse)
+    return sorted(enemies,key=key,reverse=reverse)
+
 
 enemies=get_enemies()
 enemies=sort_enemies(enemies)
