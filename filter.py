@@ -7,6 +7,7 @@ from math import sqrt
 is_shotgun = lambda shotgun:shotgun.type=='Shotgun'
 is_ammo = lambda ammo: ammo.type=="Shotgun shells"
 
+
 def get_all_players(url=keywords.url):
     players=players_GET(url)
     return players
@@ -20,8 +21,10 @@ def get_enemies(url=keywords.url):
 
 def sort_enemies(player,enemies,reverse=False):
 
+
     closest = lambda enemy: player.distance(enemy)
 
+    enemies=[e for e in enemies if e.dict['health']!=0]
     return sorted(enemies,key=closest,reverse=reverse)
 
 def sort_and_filter_p(list,pred,player,reverse=False):

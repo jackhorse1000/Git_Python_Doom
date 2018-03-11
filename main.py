@@ -5,7 +5,7 @@ from classes import Obj
 
 api.keywords.url="http://0.0.0.0:6002"
 
-start=input("press enter to begin")
+time.sleep(1)
 player=api.player_GET()
 
 def hunt():
@@ -14,15 +14,47 @@ def hunt():
 def spawn():
     player.turn(80)
     time.sleep(1)
-    player.move(200)
+    player.moveDistance(400)
     time.sleep(3)
     player.turn(-90)
     time.sleep(1)
-    player.move(200)
-    time.sleep(2)
+    player.moveDistance(400)
+    time.sleep(3)
+
+def goto_control(target):
+
+    id=target.id
+
+    while True:
+        player = api.player_GET()
 
 
-spawn()
+        turn = player.GetAngleTo(target)
+        dist= player.distance(target)
+
+        if player.GetAngleTo(target)
+
+
+
+
+
+def hunt_control(target,ratio=0.75):
+    player=api.player_GET()
+    target=[e for e in get_enemies() if e.id==target.id][0]
+    if target.dict['health']==0:
+        return
+    if(player.distance(target)<400):
+
+        player.turnTo(target)
+        time.sleep(1)
+        player.shoot(target)
+        player.shoot(target)
+    else:
+        player.Goto(target,ratio)
+        time.sleep(1)
+        hunt_control(target)
+
+# spawn()
 while True:
     player=api.player_GET()
     enemies = get_enemies()
@@ -30,18 +62,31 @@ while True:
     stuff = api.objects_GET()
     ammo = sort_and_filter_p(stuff,is_ammo,player)
 
+
+
     if player.ammo['Shells']==0:
-        print("no shells")
+        print("need shells")
         if player.weapons['Shotgun']==True:
             print("got my shotgun though")
             ammo=sort_and_filter_p(stuff,is_ammo,player)
-            player.Goto(ammo)
+            goto_control(ammo[0])
         else:
             print("need a shotgun")
             shotguns = sort_and_filter_p(stuff, is_shotgun, player)
-            player.Goto(shotguns[0])
+            # player.Goto(shotguns[0])
+            print(player.distance(shotguns[0]))
+            goto_control(shotguns[0])
+    else:
+        #got killing potential
+        print("on the hunt")
+        target=enemies[0]
+        dist=player.distance(target)
+        print (dist)
+        hunt_control(target)
+
+
     print("end of loop")
-    loop=input("press enter to loop\n")
+    # loop=input("press enter to loop\n")
 
 
 

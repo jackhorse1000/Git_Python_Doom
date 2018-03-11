@@ -9,7 +9,7 @@ class Obj(object):
         self.dict=dict
         self.id=dict['id']
 
-moveConst = 0.3
+moveConst = 0.15
 turnConst = 0.37
 distanceTolerance = 20
 
@@ -81,8 +81,8 @@ class Player(object):
     def distance(self, target):
         return math.hypot(self.position.x - target.position.x, self.position.y - target.position.y)
 
-    def move(self, target):
-        distance = self.distance(target)
+    def move(self, target,ratio=0.5):
+        distance = self.distance(target)*ratio
         if distance>distanceTolerance:
             api.player_Action("forward", int(distance * moveConst))
         #shoot or move
@@ -111,10 +111,10 @@ class Player(object):
     def moveDistance(self, distance):
         api.player_Action("forward", int(distance * moveConst))
 
-    def Goto(self,target):
+    def Goto(self,target,ratio=0.5):
         self.turnTo(target)
         time.sleep(2)
-        self.move(target)
+        self.move(target,ratio=ratio)
 
 
     def giveThemHell(self,target):
