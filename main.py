@@ -7,19 +7,15 @@ api.keywords.url="http://0.0.0.0:6002"
 
 time.sleep(1)
 player=api.player_GET()
+life_id=99999
 
 def hunt():
     pass
 
 def spawn():
-    player.turn(80)
-    time.sleep(1)
+    player.turn(90)
     player.moveDistance(400)
-    time.sleep(3)
-    player.turn(-90)
-    time.sleep(1)
-    player.moveDistance(400)
-    time.sleep(3)
+
 
 def goto_control(target):
 
@@ -44,25 +40,37 @@ def goto_control(target):
 
 
 
-def hunt_control(target,ratio=0.75):
-    player=api.player_GET()
-    target=[e for e in get_enemies() if e.id==target.id][0]
-    if target.dict['health']==0:
-        return
-    if(player.distance(target)<400):
+def hunt_control(target):
 
-        player.turnTo(target)
-        time.sleep(1)
-        player.shoot(target)
-        player.shoot(target)
-    else:
-        player.Goto(target,ratio)
-        time.sleep(1)
-        hunt_control(target)
+    id=target.id
+    print (id)
+    target = get_object_by_id(id)
+    #break out if ammo is zero, or switch weapon, low health,
+    while target.dict['health']!=0:
+        player = api.player_GET()
+        target = get_object_by_id(id)
 
-# spawn()
+        turn = player.GetAngleTo(target)
+        dist= player.distance(target)
+
+        if dist<500 and abs(turn)<10:
+            player.shoot(target)
+
+        if abs(turn)>10:
+            player.turn_frame(turn)
+            continue
+        if dist>50 and abs(turn)<15:
+            player.move_frame()
+        break
+
+
 while True:
     player=api.player_GET()
+    if life_id!=player.id:
+        life_id=player.id
+        spawn()
+        time.sleep(100)
+        continue
     enemies = get_enemies()
     enemies = sort_enemies(player, enemies)
     stuff = api.objects_GET()

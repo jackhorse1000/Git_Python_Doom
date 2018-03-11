@@ -90,7 +90,8 @@ class Player(object):
 
     def shoot(self, target):
         api.player_Action("shoot", 1)
-
+        api.player_Action("shoot", 1)
+        api.player_Action("shoot", 1)
 
     def atTarget(self,target):
         distance = self.distance(target)
