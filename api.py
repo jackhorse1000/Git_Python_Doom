@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+from classes import Obj
 
 #strings for player/action
 
@@ -34,13 +35,14 @@ def los_GET( id1, id2,url=keywords.url):
 def player_GET(url=keywords.url):
     r = requests.get(url + "/api/player")
     result = json.loads(r.text)
-    return result
+    return Obj(result)
 
 
 def players_GET(url=keywords.url):
 
     r = requests.get(url+"/api/players")
     result = json.loads(r.text)
+    result=[Obj(r) for r in result]
     return result
 
 
@@ -55,10 +57,11 @@ def player_Action(type, amount,url=keywords.url ):
     headers = {'content-type': "application/json"}
     r=requests.post(url+"/api/player/actions",data=data_json,headers=headers)
 
-def objects_GET(url):
+def objects_GET(url=keywords.url):
 
     r= requests.get(url+"/api/world/objects")
     result = json.loads(r.text)
+    result = [Obj(r) for r in result]
     return result
 
 

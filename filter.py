@@ -1,10 +1,10 @@
 from api import *
+from classes import Obj
 from math import sqrt
+from player import *
 
 
-
-closest = lambda player: sqrt((player['position']['x'])**2+(player['position']['x'])**2)
-
+is_shotgun = lambda shotgun:shotgun['type']=='Shotgun'
 
 def get_all_players(url=keywords.url):
     players=players_GET(url)
@@ -15,9 +15,21 @@ def get_enemies(url=keywords.url):
     players=get_all_players(url)
 
     enemies=[p for p in players  if p['id']!=player['id']]
+
+    enemies=[Obj(e) for e in enemies]
     return enemies
 
-def sort_enemies(enemies,key=closest,reverse=False):
-    return sorted(enemies,key=key,reverse=reverse)
+def sort_enemies(player,enemies,reverse=False):
+
+    closest = lambda enemy: player.distance(enemy)
+
+    return sorted(enemies,key=closest,reverse=reverse)
+
+def sort_and_filter_p(list,pred,player,reverse=False):
+
+    closest = lambda enemy: player.distance(enemy)
+
+    ls=filter(pred,list)
+    return sorted(ls,key=closest,reverse=reverse)
 
 
