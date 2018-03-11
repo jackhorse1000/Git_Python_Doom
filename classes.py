@@ -108,12 +108,12 @@ class Player(object):
         else:
             api.player_Action("turn-left", amount)
 
-    def move(self, distance):
+    def moveDistance(self, distance):
         api.player_Action("forward", int(distance * moveConst))
 
     def Goto(self,target):
         self.turnTo(target)
-        time.sleep(1)
+        time.sleep(2)
         self.move(target)
 
 
