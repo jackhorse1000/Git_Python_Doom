@@ -65,5 +65,16 @@ def objects_GET(url=keywords.url):
     result = [Obj(r) for r in result]
     return result
 
+def switch_weapon(int,url=keywords.url):
+    data = {
+        "type": "switch-weapon",
+        "amount": int
+    }
+    data_json = json.dumps(data)
+    headers = {'content-type': "application/json"}
+    r = requests.post(url + "/api/player/actions", data=data_json, headers=headers)
+
+
+
 
 
