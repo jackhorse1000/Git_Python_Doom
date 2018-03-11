@@ -3,6 +3,7 @@ import api
 
 moveConst = 0.4
 turnConst = 0.33
+distanceTolerance = 20
 
 class Position(object):
     def __init__(self,dict):
@@ -88,3 +89,11 @@ class Player(object):
             api.player_Action("shoot", 1)
             api.player_Action("shoot", 1)
 
+
+    def atTarget(self,target):
+        distance = self.distance()
+
+        if distance < distanceTolerance:
+            return True
+        else:
+            return False
