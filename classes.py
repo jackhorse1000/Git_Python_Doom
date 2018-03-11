@@ -128,13 +128,14 @@ class Player(object):
             time.sleep(2)
 
     def turn_frame(self, turn):
+
         if turn>0:
-            api.player_Action("right-turn", 1)
+            api.player_Action("turn-right", 4)
         else:
-            api.player_Action("left-turn", 1)
+            api.player_Action("turn-left", 4)
 
     def move_frame(self):
-        api.player_Action("forward", 1)
+        api.player_Action("forward", 10)
 
 
 
