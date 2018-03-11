@@ -14,6 +14,7 @@ class Position(object):
 class Player(object):
     def __init__(self,dict):
         self.position=Position(dict['position'])
+        self.id=dict['id']
         self.angle=dict['angle']
         self.health = ['health']
         self.armour = ['armour']
@@ -24,7 +25,7 @@ class Player(object):
 
         diffX = self.position.x - target.position.x
         diffY = self.position.y - target.position.y
-        angle = math.Atan2(diffY, diffX) * (180/math.pi)  # not sure
+        angle = math.atan2(diffY, diffX) * (180/math.pi)  # not sure
 
         if angle < 0:
             angle = angle + 360
@@ -40,9 +41,9 @@ class Player(object):
 
         if rightTurn == leftTurn:
             val = rightTurn
-        elif (math.abs(rightTurn) < math.abs(leftTurn)):
+        elif (abs(rightTurn) < abs(leftTurn)):
             val =180 - rightTurn
-        elif math.abs(leftTurn) < math.abs(rightTurn):
+        elif abs(leftTurn) < abs(rightTurn):
             val = -180 + leftTurn
 
         return val
@@ -63,7 +64,7 @@ class Player(object):
 
     def turnTo(self, target):
         angle = self.GetAngleTo(target)
-        amount=math.abs(angle)*turnConst
+        amount=abs(angle)*turnConst
 
         if angle > 0:
             api.player_Action("turn-right", amount)

@@ -4,7 +4,7 @@ from math import sqrt
 from player import *
 
 
-is_shotgun = lambda shotgun:shotgun['type']=='Shotgun'
+is_shotgun = lambda shotgun:shotgun.type=='Shotgun'
 
 def get_all_players(url=keywords.url):
     players=players_GET(url)
@@ -14,9 +14,7 @@ def get_enemies(url=keywords.url):
     player=player_GET(url)
     players=get_all_players(url)
 
-    enemies=[p for p in players  if p['id']!=player['id']]
-
-    enemies=[Obj(e) for e in enemies]
+    enemies=[p for p in players  if p.id!=player.id]
     return enemies
 
 def sort_enemies(player,enemies,reverse=False):

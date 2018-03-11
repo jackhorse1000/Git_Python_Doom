@@ -2,6 +2,7 @@ import requests
 import json
 import time
 from classes import Obj
+from player import Player
 
 #strings for player/action
 
@@ -35,7 +36,7 @@ def los_GET( id1, id2,url=keywords.url):
 def player_GET(url=keywords.url):
     r = requests.get(url + "/api/player")
     result = json.loads(r.text)
-    return Obj(result)
+    return Player(result)
 
 
 def players_GET(url=keywords.url):

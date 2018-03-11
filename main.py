@@ -3,6 +3,7 @@ import api
 from classes import Obj
 
 
+
 api.keywords.url="http://192.168.43.230:6002"
 
 
@@ -19,6 +20,7 @@ players=sort_enemies(player,enemies)
 stuff = api.objects_GET()
 shotguns = sort_and_filter_p(stuff,is_shotgun,player)
 
+player.turnTo(shotguns[0])
 
 
 while True:
