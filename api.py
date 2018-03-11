@@ -53,5 +53,5 @@ def player_Action(type, amount,url=keywords.url ):
     headers = {'content-type': "application/json"}
     r=requests.post(url+"/api/player/actions",data=data_json,headers=headers)
 
-
+print(player_GET(keywords.url))
 
