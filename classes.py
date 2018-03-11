@@ -29,6 +29,13 @@ class Player(object):
         self.weapon = dict['weapon']
         self.ammo = dict['ammo']
 
+    def no_ammo(self):
+        if self.ammo['Shells'] == 0 and self.ammo['Bullets'] == 0:
+            return True
+        else:
+            return False
+
+
     def GetAngleTo(self, target):
 
         diffX = self.position.x - target.position.x
@@ -138,9 +145,9 @@ class Player(object):
 
     def strafe_frame(self,direction):
         if direction>0:
-            api.player_Action("strafe-right",5)
+            api.player_Action("strafe-right",10)
         else:
-            api.player_Action("strafe-left",5)
+            api.player_Action("strafe-left",10)
 
     def move_frame(self):
         api.player_Action("forward", 16)

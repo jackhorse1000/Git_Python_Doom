@@ -12,8 +12,9 @@ life_id=99999
 def hunt():
     pass
 
-def spawn():
-    pass
+def spawn(player, enemy):
+    if player.distance(enemy) < 800 and api.los_GET(player.id,enemy.id)==False:
+        move_control(enemy)
 
 def weapon_control(player):
     if(player.ammo['Shells']>0 and player.weapons['Shotgun']==True and player.weapon!=3):
@@ -62,6 +63,19 @@ def goto_control(target):
         break
 
 
+def move_control(player, target):
+    enemies = get_enemies()
+    enemies = sort_enemies(player, enemies)
+
+
+    if player.distance(enemies[0])<800 and not player.no_ammo:
+        target=enemies[0]
+        hunt_control(target)
+    elif target.type=="Player":
+        hunt_control(target)
+    else:
+        goto_control(target)
+
 
 
 
@@ -102,35 +116,37 @@ while True:
 
     enemies = get_enemies()
     enemies = sort_enemies(player, enemies)
-    stuff = api.objects_GET()
-    ammo = sort_and_filter_p(stuff,is_shotgun_ammo,player)
+
 
 
 
     player=api.player_GET()
     if life_id!=player.id:
         life_id=player.id
-        spawn()
+        spawn(player, enemies[0])
         continue
 
-    if player.ammo['Shells']==0 or player.weapons['Shotgun']==False:
+    stuff = api.objects_GET()
+    ammo = sort_and_filter_p(stuff, is_shotgun_ammo, player)
+    if (player.ammo['Shells']==0 or player.weapons['Shotgun']==False) and len(ammo)>0:
         print("need shells")
         if player.weapons['Shotgun']==True:
             print("got my shotgun though")
-            goto_control(ammo[0])
+
+            move_control(player, ammo[0])
         else:
             print("need a shotgun")
             shotguns = sort_and_filter_p(stuff, is_shotgun, player)
             # player.Goto(shotguns[0])
             print(player.distance(shotguns[0]))
-            goto_control(shotguns[0])
+            move_control(player,shotguns[0])
     else:
         #got killing potential
         print("on the hunt")
         target=enemies[0]
         dist=player.distance(target)
         print (dist)
-        hunt_control(target)
+        move_control(player, target)
 
 
     print("end of loop")

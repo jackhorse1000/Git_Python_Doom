@@ -30,7 +30,7 @@ def sort_enemies(player,enemies,reverse=False):
     closest = lambda enemy: player.distance(enemy)
 
 
-    enemies=[e for e in enemies if ((e.dict['health']!=0)and (api.los_GET(player.id,e.id  )))]
+    enemies=[e for e in enemies if ((e.dict['health']!=0))]
 
     return sorted(enemies,key=closest,reverse=reverse)
 
