@@ -53,5 +53,11 @@ def player_Action(type, amount,url=keywords.url ):
     headers = {'content-type': "application/json"}
     r=requests.post(url+"/api/player/actions",data=data_json,headers=headers)
 
+def objects_GET(url):
+
+    r= requests.get(url+"/api/world/objects")
+    result = json.loads(r.text)
+    return result
+
 
 
