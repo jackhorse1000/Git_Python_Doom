@@ -20,9 +20,9 @@ class Player(object):
 
     def GetAngleTo(self, target):
 
-        diffX = math.abs(self.position.x - target.position.x)
-        diffY = math.abs(self.position.y - target.position.y)
-        angle = math.degrees(math.Atan2(diffY, diffX))  # not sure
+        diffX = self.position.x - target.position.x
+        diffY = self.position.y - target.position.y
+        angle = math.Atan2(diffY, diffX) * (180/math.pi)  # not sure
 
         if angle < 0:
             angle = angle + 360
@@ -39,11 +39,11 @@ class Player(object):
         if rightTurn == leftTurn:
             val = rightTurn
         elif (math.abs(rightTurn) < math.abs(leftTurn)):
-            val = rightTurn
+            val =180 - rightTurn
         elif math.abs(leftTurn) < math.abs(rightTurn):
-            val = -leftTurn
+            val = -180 + leftTurn
 
-        return -val
+        return val
 
     def lookingAt(self, target):
         distance = math.hypot(self.position.x - target.position.x, self.position.y - target.position.y)
