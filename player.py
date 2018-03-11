@@ -1,4 +1,8 @@
 import math
+import api
+
+moveConst = 0.4
+turnConst = 0.33
 
 class Position(object):
     def __init__(self,dict):
@@ -54,3 +58,33 @@ class Player(object):
 
         formatedAngle = math.abs(self.angle - reqAngle)
         return int(formatedAngle) < tolerance
+
+    def turnTo(self, target):
+        angle = self.GetAngleTo(target)
+        amount=math.abs(angle)*turnConst
+
+        if angle > 0:
+            api.player_Action("turn-right", amount)
+        else:
+            api.player_Action("turn-left", amount)
+
+    def distance(self, target):
+        return math.hypot(self.position.x - target.position.x, self.position.y - target.position.y)
+
+    def move(self, target):
+        if not self.lookingAt(target):
+            self.turnTo(target)
+        else:
+            distance = self.distance()
+            #shoot or move
+            api.move(distance*moveConst)
+
+    def shoot(self, target):
+        #get the best weapon find weapon and change
+        if self.lookingAt(target):
+            api.player_Action("shoot", 1)
+            api.player_Action("shoot", 1)
+            api.player_Action("shoot", 1)
+            api.player_Action("shoot", 1)
+            api.player_Action("shoot", 1)
+
