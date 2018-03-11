@@ -10,7 +10,7 @@ class Obj(object):
         self.id=dict['id']
 
 moveConst = 0.3
-turnConst = 0.33
+turnConst = 0.37
 distanceTolerance = 20
 
 class Position(object):
@@ -110,6 +110,12 @@ class Player(object):
 
     def move(self, distance):
         api.player_Action("forward", int(distance * moveConst))
+
+    def Goto(self,target):
+        self.turnTo(target)
+        time.sleep(1)
+        self.move(target)
+
 
     def giveThemHell(self,target):
         for x in range(4):
