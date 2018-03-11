@@ -13,8 +13,7 @@ def hunt():
     pass
 
 def spawn():
-    player.turn(90)
-    player.moveDistance(400)
+    pass
 
 
 def goto_control(target):
@@ -29,10 +28,14 @@ def goto_control(target):
         turn = player.GetAngleTo(target)
         dist= player.distance(target)
 
+        if api.los_GET(player.id,target.id)==False:
+            player.turn_frame(1)
+            player.move_frame()
+            continue
         if abs(turn)>10:
             player.turn_frame(turn)
             continue
-        if dist>50 and abs(turn)<15:
+        if dist>30 and abs(turn)<15:
             player.move_frame()
         break
 
@@ -53,7 +56,11 @@ def hunt_control(target):
         turn = player.GetAngleTo(target)
         dist= player.distance(target)
 
-        if dist<500 and abs(turn)<10:
+        if api.los_GET(player.id,target.id)==False:
+            player.turn_frame(1)
+            player.move_frame()
+            continue
+        if dist<1000 and abs(turn)<10:
             player.shoot(target)
 
         if abs(turn)>10:
@@ -65,24 +72,22 @@ def hunt_control(target):
 
 
 while True:
-    player=api.player_GET()
-    if life_id!=player.id:
-        life_id=player.id
-        spawn()
-        time.sleep(100)
-        continue
+
     enemies = get_enemies()
     enemies = sort_enemies(player, enemies)
     stuff = api.objects_GET()
     ammo = sort_and_filter_p(stuff,is_ammo,player)
 
+    player=api.player_GET()
+    if life_id!=player.id:
+        life_id=player.id
+        spawn()
+        continue
 
-
-    if player.ammo['Shells']==0:
+    if player.ammo['Shells']==0 or player.weapons['Shotgun']==False:
         print("need shells")
         if player.weapons['Shotgun']==True:
             print("got my shotgun though")
-            ammo=sort_and_filter_p(stuff,is_ammo,player)
             goto_control(ammo[0])
         else:
             print("need a shotgun")

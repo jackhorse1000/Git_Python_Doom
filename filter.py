@@ -28,7 +28,9 @@ def sort_enemies(player,enemies,reverse=False):
 
     closest = lambda enemy: player.distance(enemy)
 
-    enemies=[e for e in enemies if e.dict['health']!=0]
+
+    enemies=[e for e in enemies if ((e.dict['health']!=0)and (api.los_GET(player.id,e.id  )))]
+
     return sorted(enemies,key=closest,reverse=reverse)
 
 def sort_and_filter_p(list,pred,player,reverse=False):
