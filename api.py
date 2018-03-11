@@ -16,6 +16,8 @@ class keywords(object):
         self.strafe_left = "strafe-left"
         self.switch_weapon = "switch-weapon"
 
+
+
 keywords=keywords("http://0.0.0.0:6002")
 
 def world_GET(url=keywords.url):
