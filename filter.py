@@ -6,7 +6,8 @@ import api
 
 
 is_shotgun = lambda shotgun:shotgun.type=='Shotgun'
-is_ammo = lambda ammo: ammo.type=="Shotgun shells"
+is_shotgun_ammo = lambda ammo: ammo.type=="Shotgun shells"
+is_bullet_ammo = lambda ammo: ammo.type=="Ammo clip"
 
 def get_object_by_id(id):
     ojbects=api.objects_GET()

@@ -26,6 +26,7 @@ class Player(object):
         self.health = dict['health']
         self.armor = dict['armor']
         self.weapons = dict['weapons']
+        self.weapon = dict['weapon']
         self.ammo = dict['ammo']
 
     def GetAngleTo(self, target):
@@ -131,12 +132,18 @@ class Player(object):
     def turn_frame(self, turn):
 
         if turn>0:
-            api.player_Action("turn-right", 4)
+            api.player_Action("turn-right", 5)
         else:
-            api.player_Action("turn-left", 4)
+            api.player_Action("turn-left", 5)
+
+    def strafe_frame(self,direction):
+        if direction>0:
+            api.player_Action("strafe-right",5)
+        else:
+            api.player_Action("strafe-left",5)
 
     def move_frame(self):
-        api.player_Action("forward", 10)
+        api.player_Action("forward", 16)
 
 
 
