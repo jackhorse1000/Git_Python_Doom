@@ -2,7 +2,7 @@ import math
 import api
 import time
 
-moveConst = 0.4
+moveConst = 0.3
 turnConst = 0.33
 distanceTolerance = 20
 
@@ -59,7 +59,7 @@ class Player(object):
         if distance < 10:
             tolerance = 45
 
-        formatedAngle = math.abs(self.angle - reqAngle)
+        formatedAngle = abs(self.angle - reqAngle)
         return int(formatedAngle) < tolerance
 
     def turnTo(self, target):
@@ -75,27 +75,18 @@ class Player(object):
         return math.hypot(self.position.x - target.position.x, self.position.y - target.position.y)
 
     def move(self, target):
-        if not self.lookingAt(target):
-            self.turnTo(target)
-        else:
-            distance = self.distance()
-            #shoot or move
-            api.move(distance*moveConst)
+        distance = self.distance(target)
+        if distance>distanceTolerance:
+            api.player_Action("forward", int(distance * moveConst))
+        #shoot or move
+
 
     def shoot(self, target):
-        #get the best weapon find weapon and change
-        self.turnTo(target)
-        time.sleep(1/20)
-        if self.lookingAt(target):
-            api.player_Action("shoot", 1)
-            api.player_Action("shoot", 1)
-            api.player_Action("shoot", 1)
-            api.player_Action("shoot", 1)
-            api.player_Action("shoot", 1)
+        api.player_Action("shoot", 1)
 
 
     def atTarget(self,target):
-        distance = self.distance()
+        distance = self.distance(target)
 
         if distance < distanceTolerance:
             return True
@@ -104,7 +95,10 @@ class Player(object):
 
     def giveThemHell(self,target):
         for x in range(4):
+            time.sleep(2)
             self.turnTo(target)
+            time.sleep(2)
             self.move(target)
+            time.sleep(4)
             self.shoot(target)
-            time.sleep(1/15)
+            time.sleep(2)

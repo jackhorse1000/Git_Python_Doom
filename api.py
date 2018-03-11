@@ -20,7 +20,7 @@ class keywords(object):
 
 
 
-keywords=keywords("http://0.0.0.0:6002")
+keywords=keywords("http://0.0.0.0:6001")
 
 def world_GET(url=keywords.url):
 
