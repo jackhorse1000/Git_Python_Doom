@@ -4,31 +4,42 @@ from classes import Obj
 
 
 
+obs=api.objects_GET()
+for o in obs:
+    print (o.type)
+start=input("press enter to begin")
+
 api.keywords.url="http://0.0.0.0:6002"
 
 
-player=api.player_GET()
+def hunt():
+    pass
 
 
 
-enemies=get_enemies()
-
-enemies=sort_enemies(player,enemies)
-
-stuff = api.objects_GET()
-shotguns = sort_and_filter_p(stuff,is_shotgun,player)
+def spawn():
+    player.turn(80)
+    time.sleep(1)
+    player.move(300)
 
 
-player.turnTo(enemies[0])
-player.shoot(enemies[0])
 
-print (player.ammo['Shells'])
+while True:
+    player=api.player_GET()
+    enemies = get_enemies()
+    enemies = sort_enemies(player, enemies)
+    stuff = api.objects_GET()
+    ammo = sort_and_filter_p(stuff,is_ammo,player)
 
-#espace the pillar
+    if player.ammo['Shells']==0:
+        if player.weapons['Shotgun']==True:
+            ammo=sort_and_filter_p(stuff,is_ammo,player)
+            player.Goto(ammo)
+        else:
+            shotguns = sort_and_filter_p(stuff, is_shotgun, player)
+            player.Goto(shotguns[0])
 
-#
-# while True:
-#     player.turnTo(enemies[0])
-#     time.sleep(2)
-#     player.shoot(enemies[0])
-#     time.sleep(0.5)
+
+
+
+
